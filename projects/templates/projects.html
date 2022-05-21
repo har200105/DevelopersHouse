@@ -1,0 +1,75 @@
+{% extends 'main.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href={%static 'uikit/styles/uikit.css'%} />
+  <link rel="stylesheet" href={%static 'styles/app.css'%} />
+    <title>Projects</title>
+</head>
+<body>
+  {% block content %}
+      <main class="projects">
+    <section class="hero-section text-center">
+      <div class="container container--narrow">
+     
+        <div class="hero-section__box">
+          <h2>Search for <span>Projects</span></h2>
+        </div>
+
+        <div class="hero-section__search">
+          <form class="form" action="#" method="get">
+            <div class="form__field">
+              <label for="formInput#search">Search By Projects </label>
+              <input class="input input--text" id="formInput#search" type="text" name="text"
+                placeholder="Search by Project Title" />
+            </div>
+
+            <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+          </form>
+        </div>
+      </div>
+    </section>
+    <section class="projectsList">
+      <div class="container">
+        <div class="grid grid--three">
+          {% for project in projects  %}{% endfor %}
+          <div class="column">
+            <div class="card project">
+              <a href="single-project.html" class="project">
+                <img class="project__thumbnail" src="images/project-a.png" alt="project thumbnail" />
+                <div class="card__body">
+                  <h3 class="project__title">Yoga Studio Landing Page Website and Design</h3>
+                  <p><a class="project__author" href="profile.html">By Dennis Ivanov</a></p>
+                  <p class="project--rating">
+                    <span style="font-weight: bold;">98%</span> Postitive
+                    Feedback (72 Votes)
+                  </p>
+                  <div class="project__tags">
+                    <span class="tag tag--pill tag--main">
+                      <small>NextJS</small>
+                    </span>
+                    <span class="tag tag--pill tag--main">
+                      <small>GraphQL</small>
+                    </span>
+                    <span class="tag tag--pill tag--main">
+                      <small>TypeScript</small>
+                    </span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+  </main>
+  {% endblock content %}
+</body>
+</html>

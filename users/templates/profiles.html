@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% block content %}
+    <section class="devlist">
+      <div class="container">
+        <div class="grid grid--three">
+            {% for profile in profiles  %}
+            <div class="column card">
+            <div class="dev">
+              <a href="/profile.html" class="card__body">
+                <div class="dev__profile">
+                  <img class="avatar avatar--md" src="https://avatars.githubusercontent.com/u/22437186" alt="image" />
+                  <div class="dev__meta">
+                    <h3>Shahriar P. Shuvo</h3>
+                    <h5>FullStack Web Designer & Developer</h5>
+                  </div>
+                </div>
+                <p class="dev__info">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate, ducimus inventore! Sunt,
+                  veniam veritatis? Veritatis placeat, deleniti iure tempore veniam perspiciatis, soluta cupiditate
+                  animi, exercitationem molestias nam doloremque architecto odit.
+                </p>
+                <div class="dev__skills">
+                  {% for skill in profile.skill_set.all %}
+                    <span class="tag tag--pill tag--main">
+                    <small>{{skill}}</small>
+                  </span>
+                  {% endfor %}
+                </div>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}
