@@ -32,7 +32,7 @@ def projects(request):
         leftIndex = 1
 
 
-    rightIndex = (int(page) + 5 )
+    rightIndex = (int(page) + 5)
 
     if rightIndex > paginator.num_pages:
         rightIndex = paginator.num_pages + 1   

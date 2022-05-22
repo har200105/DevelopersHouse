@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from users.models import Profile, Skill
+from users.models import Profile, Skill,Messages
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -27,8 +27,7 @@ class ProfileForm(ModelForm):
             field.widget.attrs.update({'class':'input'})        
 
 
-class SkillForm(ModelForm):
-    
+class SkillForm(ModelForm):    
     class Meta:
         model = Skill
         fields = '__all__'
@@ -38,3 +37,15 @@ class SkillForm(ModelForm):
         super(CustomUserCreationForm,self).__init__(*args,**kwargs)
         for name,field  in self.fields.items():
             field.widget.attrs.update({'class':'input'})     
+
+
+class MessageForm(ModelForm):
+    class Meta:
+        model = Messages
+        fields = ['name','email','subject','body']
+
+    def __init__(self,*args,**kwargs):
+        super(MessageForm,self).__init__(*args,**kwargs)
+        # self.fields['title'].widget.attrs.update({'class':'input'})
+        for name,field  in self.fields.items():
+            field.widget.attrs.update({'class':'input'})    

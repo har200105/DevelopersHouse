@@ -1,13 +1,13 @@
+from multiprocessing import context
 from re import L
 from django.shortcuts import render,redirect
-
 from users.utils import searchProfiles
 from .models import Profile, Skill
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
 # from django.contrib.auth.forms import UserCreationForm
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .forms import CustomUserCreationForm, MessageForm, ProfileForm, SkillForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
@@ -160,3 +160,30 @@ def deleteSkill(request,pk):
         return redirect('account')
     context = {'object':skill}
     return render(request,'delete.html',context)
+
+
+@login_required(login_url='login')
+def inbox(request):
+    profile = request.user.profile
+    messageRequests = profile.objects.all()
+    unReadCount = messageRequests.filter(is_read=False).count()
+    context = {'messageRequests':messageRequests,'unReadCount':unReadCount}
+    return render(request,'login.html',context)
+
+
+@login_required(login_url='login')
+def viewMessage(request,pk):
+    profile = request.user.profile
+    message = profile.message.get(id=pk)
+    if message.is_read == False:
+        message.is_read = True
+        message.save()
+    context = {'message':message} 
+    return render(request,'message.html',context)
+
+
+def createMessage(request,pk):
+    recipient = Profile.objects.get(id=pk)
+    form = MessageForm()
+    context = {}
+    return render(request,'message_form.html',context)
