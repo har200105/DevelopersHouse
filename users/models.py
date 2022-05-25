@@ -4,6 +4,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save,post_delete
 from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=False)
@@ -33,6 +36,16 @@ def createProfile(sender,instance,created,**kwargs):
             user=user,
             email=user.email,
             name=user.first_name
+        )
+        subject = 'Welcome to Developers House'
+        message = 'xD'
+
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [profiles.email],
+            fail_silently=False
         )
 
 @receiver(post_delete,sender=Profile)

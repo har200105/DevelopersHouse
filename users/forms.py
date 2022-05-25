@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from users.models import Profile, Skill,Messages
 
 class CustomUserCreationForm(UserCreationForm):
-    class Meta:
+    class Meta: 
+        
         model = User
         fields = ['first_name','email','username','password1','password2']
         labels={
