@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-a&dbu-y+of69g8tw49=topa6$k%is(sih73$6m#if1^l#j@d3f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'developershouse.herokuapp.com'
+]
 
 
 # Application definition
@@ -41,11 +45,12 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'cloudinary_storage'
 ]
 
 MIDDLEWARE = [
-    'cors.middleware.CorsMiddleware',
+    # 'cors.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -150,3 +155,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'harshitr2001@gmail.com'
 EMAIL_HOST_PASSWORD  = ''
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'harshit111',
+    'API_KEY': '872437891895558',
+    'API_SECRET': 'N9l0hKaYJECvTShq2YejDvAmsEM'
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

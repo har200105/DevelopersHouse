@@ -4,7 +4,7 @@
 <header class="header">
     <div class="container container--narrow">
         <a href="{% url 'profiles' %}" class="header__logo">
-            <img src="{% static 'images/logo.svg' %} " alt="DevSearch Logo" />
+                Developers House
         </a>
 
         <nav class="header__nav">
@@ -21,8 +21,8 @@
 
                 {% if request.user.is_authenticated %}
                 <li class="header__menuItem"><a href="{% url 'inbox' %}">Inbox</a></li>
-                <li class="header__menuItem"><a href="{% url 'account' %}">Account</a></li>
-                <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
+                <li class="header__menuItem"><a href="{% url 'account' %}">Profile</a></li>
+                <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub" style="color:white;">Logout</a></li>
                 {% else %}
                 <li class="header__menuItem"><a href="{% url 'login' %}" class="btn btn--sub">Login/Sign Up</a></li>
                 {% endif %}

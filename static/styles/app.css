@@ -1,9 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300&display=swap');
+
 :root {
-  --color-sub: #2d2d39;
+  --color-sub:#92B4EC;
+}
+
+*{
+color: black !important;
+font-family: 'Poppins', sans-serif;
 }
 
 .btn--sub {
   background-color: var(--color-sub-light);
+  color: white;
 }
 
 .card {
@@ -302,10 +310,12 @@ img {
 
 .pagination .btn {
   color: var(--color-sub);
+    color: white;
 }
 
 .pagination .btn.btn--sub {
   color: var(--color-light);
+
 }
 
 

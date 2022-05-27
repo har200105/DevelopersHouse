@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Messages, Profile, Skill
+from .models import Message, Profile, Skill
 
 
 admin.site.register(Profile)
 admin.site.register(Skill)
-admin.site.register(Messages)
+admin.site.register(Message)

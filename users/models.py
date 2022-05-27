@@ -1,52 +1,81 @@
-import profile
-import uuid
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save,post_delete
+import uuid
+# Create your models here.
+
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from django.core.mail import send_mail
-from django.conf import settings
+# from .signals
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,null=False)
-    name = models.CharField(max_length=200,blank=True,null=True)
-    email = models.EmailField(max_length=500,blank=True,null=True)
-    location = models.CharField(max_length=200,blank=True,null=True)
-    short_intro = models.CharField(max_length=200,blank=True,null=True)
-    bio = models.TextField(blank=True,null=True)
-    profile_image = models.ImageField(null=True,blank=True,upload_to='profiles/',default='profile/default.png')
-    github = models.CharField(max_length=200,blank=True,null=True)
-    linkedin = models.CharField(max_length=200,blank=True,null=True)
-    twitter = models.CharField(max_length=200,blank=True,null=True)
-    portfolio = models.CharField(max_length=200,blank=True,null=True)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    email = models.EmailField(max_length=500, blank=True, null=True)
+    username = models.CharField(max_length=200, blank=True, null=True)
+    location = models.CharField(max_length=200, blank=True, null=True)
+    short_intro = models.CharField(max_length=200, blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+    profile_image = models.ImageField(
+        null=True, blank=True, upload_to='profiles/', default="developer.jpg")
+    social_github = models.CharField(max_length=200, blank=True, null=True)
+    social_twitter = models.CharField(max_length=200, blank=True, null=True)
+    social_linkedin = models.CharField(max_length=200, blank=True, null=True)
+    social_youtube = models.CharField(max_length=200, blank=True, null=True)
+    social_website = models.CharField(max_length=200, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
 
     def __str__(self):
-        return str(self.user.name)   
+        return str(self.username)
+
+    class Meta:
+        ordering = ['created']
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.profile_image.url
+        except:
+            url = ''
+        return url
 
 
-@receiver(post_save,sender=User)
-def createProfile(sender,instance,created,**kwargs):
-    if created:
-        user = instance
-        profiles = Profile.objects.create(
-            user=user,
-            email=user.email,
-            name=user.first_name
-        )
-        subject = 'Welcome to Developers House'
-        message = 'xD'
+class Skill(models.Model):
+    owner = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    description = models.TextField(null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True,
+                          primary_key=True, editable=False)
 
-        send_mail(
-            subject,
-            message,
-            settings.EMAIL_HOST_USER,
-            [profiles.email],
-            fail_silently=False
-        )
+    def __str__(self):
+        return str(self.name)
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(
+        Profile, on_delete=models.SET_NULL, null=True, blank=True)
+    recipient = models.ForeignKey(
+        Profile, on_delete=models.SET_NULL, null=True, blank=True, related_name="messages")
+    name = models.CharField(max_length=200, null=True, blank=True)
+    email = models.EmailField(max_length=200, null=True, blank=True)
+    subject = models.CharField(max_length=200, null=True, blank=True)
+    body = models.TextField()
+    is_read = models.BooleanField(default=False, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True,
+                          primary_key=True, editable=False)
+
+    def __str__(self):
+        return self.subject
+
+    class Meta:
+        ordering = ['is_read', '-created']
+
 
 @receiver(post_delete,sender=Profile)
 def deleteUser(sender,instance,created,**kwargs):
@@ -63,33 +92,12 @@ def updateUser(sender,instance,created,**kwargs):
         user.email = profile.email
         user.save()
 
-# post_save.connect(profileUpdated,sender=Profile)
- 
-class Skill(models.Model):
-    owner = models.ForeignKey(Profile,blank=True,on_delete=models.CASCADE,null=True)
-    name =  models.CharField(max_length=200,blank=True,null=True)
-    description = models.CharField(max_length=200,blank=True,null=True)
-    created = models.DateTimeField(auto_now_add=True)
-    id = models.UUIDField(default=uuid.uuid4, unique=True,
-                          primary_key=True, editable=False)
-
-    def __str__(self):
-        return str(self.name)                      
-
-
-class Messages(models.Model):
-    sender = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True,blank=True)
-    receiver = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True,blank=True,related_name='messages')
-    name = models.CharField(max_length=200,null=True,blank=True)
-    email = models.CharField(max_length=200,null=True,blank=True)
-    subject = models.CharField(max_length=200,null=True,blank=True)
-    body = models.TextField()
-    is_read=models.BooleanField(default=False,null=True)
-    created = models.DateTimeField(auto_now_add=True)
-    id = models.UUIDField(default=uuid.uuid4,unique=True,primary_key=True,editable=False)
-
-    def __str__(self):
-        return self.subject
-
-    class Meta:
-        ordering = ['is_read','-created']    
+@receiver(post_save,sender=User)
+def createProfile(sender,instance,created,**kwargs):
+    if created:
+        user = instance
+        profiles = Profile.objects.create(
+            user=user,
+            email=user.email,
+            name = user.first_name
+        )
