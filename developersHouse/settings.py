@@ -156,6 +156,16 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'harshitr2001@gmail.com'
 EMAIL_HOST_PASSWORD  = ''
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd3b0pk01d948sf',                     
+        'USER': 'jlzcnhurlxaahm',
+        'PASSWORD': 'd738834d8461422b1b781a1859be521b69eb258e4ae10ff48e0f20de828a2587',
+        'HOST': 'ec2-54-86-224-85.compute-1.amazonaws.com',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
+        'PORT': 5432,                      # Set to empty string for default.
+    }
+}
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'harshit111',
