@@ -167,6 +167,10 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+dbs = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(dbs) 
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'harshit111',
     'API_KEY': '872437891895558',
