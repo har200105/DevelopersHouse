@@ -33,7 +33,7 @@ def loginUser(request):
             return redirect(request.GET['next'] if 'next' in request.GET else 'account')
 
         else:
-            messages.error(request, 'Username OR password is incorrect')
+            messages.error(request, 'Username or password is incorrect')
 
     return render(request, 'auth.html')
 

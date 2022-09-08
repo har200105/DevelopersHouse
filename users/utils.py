@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def paginateProfiles(request, profiles, results):
+
     page = request.GET.get('page')
     paginator = Paginator(profiles, results)
 
@@ -28,6 +29,8 @@ def paginateProfiles(request, profiles, results):
         rightIndex = paginator.num_pages + 1
 
     custom_range = range(leftIndex, rightIndex)
+    print('Custom')
+    print(custom_range)
 
     return custom_range, profiles
 
