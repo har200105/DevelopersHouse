@@ -5,13 +5,15 @@
 }
 
 *{
-color: black !important;
 font-family: 'Poppins', sans-serif;
 }
 
 .btn--sub {
   background-color: var(--color-sub-light);
-  color: white;
+}
+
+.page-link{
+  color: black !important;
 }
 
 .card {
@@ -44,6 +46,10 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.header__logo{
+  color: white;
 }
 
 .header__logo > img {
@@ -84,6 +90,7 @@ img {
   .header__logo {
     position: relative;
     z-index: 999;
+
   }
   .toggle-menu {
     position: relative;
