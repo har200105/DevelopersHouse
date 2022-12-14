@@ -50,7 +50,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # 'cors.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -156,18 +155,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'harshitr2001@gmail.com'
 EMAIL_HOST_PASSWORD  = ''
 
-# postgres://jlzcnhurlxaahm:d738834d8461422b1b781a1859be521b69eb258e4ae10ff48e0f20de828a2587@ec2-54-86-224-85.compute-1.amazonaws.com:5432/d3b0pk01d948sf
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd3b0pk01d948sf',                     
-        'USER': 'ombkzpuawdbddl',
-        'PASSWORD': 'd14d85a406cbfb863dcace35ffb93dfaacc55661f981b1a1c4ea6895228f3314',
-        'HOST': 'ec2-54-86-224-85.compute-1.amazonaws.com',               
-        'PORT': '',                    
-    }
-    # postgres://ombkzpuawdbddl:d14d85a406cbfb863dcace35ffb93dfaacc55661f981b1a1c4ea6895228f3314@ec2-54-86-224-85.compute-1.amazonaws.com:5432/d3b0pk01d948sf
-}
+
 
 # import dj_database_url
 # dbs = dj_database_url.config(conn_max_age=600)
@@ -178,4 +166,5 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '872437891895558',
     'API_SECRET': 'N9l0hKaYJECvTShq2YejDvAmsEM'
 }
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
